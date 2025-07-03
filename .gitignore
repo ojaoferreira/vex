@@ -1,0 +1,26 @@
+# Binários Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+vex
+
+# Diretórios e arquivos do Go
+bin/
+pkg/
+coverage.out
+
+# Arquivos do VS Code
+.vscode/
+
+# Arquivos do macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
