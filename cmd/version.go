@@ -13,14 +13,14 @@ import (
 var versionCmd = &cobra.Command{
 	Use:   "version [major|minor|patch|manual <version>]",
 	Short: "Atualiza a versão da aplicação baseada em um arquivo JSON",
-	Long: `O comando 'version' permite incrementar ou definir manualmente a versão de uma aplicação 
+	Long: `O comando 'version' permite incrementar ou definir manualmente a versão de uma aplicação
 no formato semântico (major.minor.patch), utilizando um arquivo JSON como base.
 
-Você pode especificar o tipo de incremento desejado (major, minor, patch) ou definir 
-uma versão estática específica (ex: manual 2.5.1). O arquivo de versão pode ser passado 
+Você pode especificar o tipo de incremento desejado (major, minor, patch) ou definir
+uma versão estática específica (ex: manual 2.5.1). O arquivo de versão pode ser passado
 via flag ou detectado automaticamente na raiz do projeto (./application.json por padrão).
 
-O comando também permite realizar commit e tag automáticos via Git, com suporte a mensagens 
+O comando também permite realizar commit e tag automáticos via Git, com suporte a mensagens
 customizadas e opção para desabilitar essa integração.
 
 Exemplos:
@@ -31,8 +31,12 @@ Exemplos:
   vex version minor --no-git-tag-version`,
 	Args: cobra.MaximumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
+		filePath, _ := cmd.Flags().GetString("file")
+		commitMsg, _ := cmd.Flags().GetString("commit")
+		noGit, _ := cmd.Flags().GetBool("no-git-tag-version")
+
 		if len(args) == 0 {
-			handler.HandleVersion("invalid", "", "", false, "")
+			handler.HandleVersion("", filePath, "", true, "")
 			return
 		}
 
@@ -45,10 +49,6 @@ Exemplos:
 			}
 			manualVersion = args[1]
 		}
-
-		filePath, _ := cmd.Flags().GetString("file")
-		commitMsg, _ := cmd.Flags().GetString("commit")
-		noGit, _ := cmd.Flags().GetBool("no-git-tag-version")
 
 		handler.HandleVersion(level, filePath, commitMsg, noGit, manualVersion)
 	},

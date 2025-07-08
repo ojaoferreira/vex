@@ -9,7 +9,7 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o vex ./mai
 
 # Imagem final com git
 FROM alpine:3.20
-RUN apk add --no-cache git \
+RUN apk add --no-cache git curl jq \
     && git config --system user.email "vex@kube.labs" \
     && git config --system user.name "Vex"
 
