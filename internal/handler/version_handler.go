@@ -24,6 +24,11 @@ func HandleVersion(level, filePath, commitMessage string, noGit bool, manualVers
 		utils.Error("Versão inválida: " + err.Error())
 	}
 
+	if level == "" && manualVersion == "" {
+		fmt.Println(currentVersion.String())
+		return
+	}
+
 	var newVersion *core.Version
 	if level == "manual" {
 		newVersion, err = service.ParseVersion(manualVersion)
